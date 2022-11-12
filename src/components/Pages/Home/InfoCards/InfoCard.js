@@ -4,7 +4,7 @@ const InfoCard = ({ infoCard }) => {
     const { name, icon, description, bgColor } = infoCard;
     return (
         <div>
-            <div className={`card card-side hover:drop-shadow-2xl h-40 px-2 py-5 hover:cursor-grab 
+            <div className={`card card-side hover:drop-shadow-2xl h-40 px-2 lg:py-5 hover:cursor-grab 
             ${bgColor}`}>
                 <figure><img className='block h-14 w-14 m-2' src={icon} alt="icons" /></figure>
                 <div className="card-body block">
