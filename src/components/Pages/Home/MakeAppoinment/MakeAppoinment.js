@@ -5,7 +5,7 @@ import femaledoctor from '../../../../assets/images/female-doctor.png'
 const MakeAppoinment = () => {
     return (
         <div>
-            <section className='mt-16 mb-10'>
+            <section className='mt-32 mb-10'>
                 <div className="hero" style={{ backgroundImage: `url("${bgAppoinment}")` }}>
                     <div className="hero-overlay bg-opacity-40"></div>
 
