@@ -4,7 +4,7 @@ import treatment from '../../../../assets/images/treatment.png'
 const ExDantalCare = () => {
     return (
         <div>
-            <div iv className="hero min-h-screen bg-base-200 max-w-screen-lg mx-auto m-y-5 px-5">
+            <div className="hero min-h-screen bg-base-200 max-w-screen-lg mx-auto m-y-5 px-5">
                 <div className="hero-content flex-col  lg:flex-row md:flex-row">
                     <img src={treatment} className="lg:w-2/5 md:w-2/5 rounded-lg shadow-2xl" alt='treatment'/>
                     <div>
