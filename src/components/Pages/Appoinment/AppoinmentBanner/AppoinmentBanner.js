@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
 import bgChair from '../../../../assets/images/bg.png'
 import chair from '../../../../assets/images/chair.png'
 import { DayPicker } from 'react-day-picker';
-import { format } from 'date-fns';
 
 
 
-const AppoinmentBanner = () => {
-    const [selectedDate, setSelectedDate] = useState(new Date());
+const AppoinmentBanner = ({selectedDate, setSelectedDate}) => {
     return (
         <div>
             <div className="hero min-h-screen" style={{ backgroundImage: `url("${bgChair}")` }}>
@@ -22,7 +19,7 @@ const AppoinmentBanner = () => {
                                      selected={selectedDate}
                                      onSelect={setSelectedDate}
                                 />
-                                <p className='text-center pb-5'>You picked {format(selectedDate, 'PP')}.</p>
+                                {/* <p className='text-center pb-5'>You picked {format(selectedDate, 'PP')}.</p> */}
                             </div>
                         </div>
                     </div>
