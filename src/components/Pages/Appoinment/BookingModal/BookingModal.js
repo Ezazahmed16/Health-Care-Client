@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../../../../context/AuthProvider/AuthProvider';
 
 
 
-const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
+const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
+    const { user } = useContext(AuthContext)
     const { name, slots } = treatment;
     const handleBooking = event => {
         event.preventDefault()
@@ -23,9 +25,23 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
             number,
         }
 
-        console.log(booking);
-        toast.success('Successfully Submit Your Information')
-        setTreatment(null)
+        fetch('http://localhost:5000/bookings', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(booking)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged) {
+                    setTreatment(null)
+                    toast.success('Successfully Booking Confirmed')
+                    refetch();
+                } else {
+                    toast.error(data.message)
+                }
+            })
     }
     return (
         <>
@@ -62,13 +78,13 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
                                 <label className="label">
                                     <span className="label-text">Name</span>
                                 </label>
-                                <input type="text" name="name" className="input input-bordered" placeholder='Your Name' required />
+                                <input type="text" name="name" className="input input-bordered" placeholder='Your Name' defaultValue={user?.displayName} disabled required />
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email</span>
                                 </label>
-                                <input type="email" name="email" className="input input-bordered" placeholder='Your Email' required />
+                                <input type="email" name="email" className="input input-bordered" placeholder='Your Email' defaultValue={user?.email} disabled required />
                             </div>
                             <div className="form-control">
                                 <label className="label">

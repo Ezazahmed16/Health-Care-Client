@@ -5,7 +5,6 @@ import { AuthContext } from '../../../../context/AuthProvider/AuthProvider';
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext)
-    console.log(user)
     const menuItems = <>
         <li><NavLink to='/home'>Home</NavLink></li>
         <li><NavLink to='/about'>About</NavLink></li>
@@ -20,7 +19,6 @@ const Navbar = () => {
                 toast.warning('Logout Successfull')
             }).catch((error) => {
                 // An error happened.
-                console.log(error.message)
             });
     }
 
@@ -57,8 +55,8 @@ const Navbar = () => {
                                             </div>
                                         </div>
 
-                                        <p className='text-center text-base-content text-sm font-bold'>{user.displayName}</p>
-                                        <p className='text-center text-base-content text-sm block'>{user.email}</p>
+                                        <p className='text-center text-base-content text-sm font-bold'>{user?.displayName}</p>
+                                        <p className='text-center text-base-content text-sm block'>{user?.email}</p>
                                     </div>
 
                                     <li><Link className='btn btn-success btn-outline m-1' to='/dashboard '>Dashboard</Link></li>

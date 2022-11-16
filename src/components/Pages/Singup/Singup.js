@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { FaGoogle, FaFacebookF } from 'react-icons/fa';
 import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
@@ -9,6 +9,7 @@ const Singup = () => {
     const { createUser, updateUser, googleLogin } = useContext(AuthContext);
     const [errorMessage, setErrorMessage] = useState('')
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const navigate  = useNavigate()
 
     const handSingup = (data) => {
         setErrorMessage('')
@@ -16,12 +17,11 @@ const Singup = () => {
         createUser(data.email, data.password)
             .then((userCredential) => {
                 // const user = userCredential.user;
-                console.log(userCredential.user)
                 toast.success('Singup Successfull')
 
                 updateUser(data.name)
                     .then(() => {
-                        console.log(userCredential.user);
+                        navigate('/home');
                     }).catch((error) => {
 
                     });

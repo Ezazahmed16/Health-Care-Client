@@ -19,7 +19,6 @@ const Login = () => {
     // const [data, setData] = useState("");
 
     const handleLogin = (data) => {
-        console.log(data);
         setErrorMessage('')
         loginWithEmial(data.email, data.password)
             .then((userCredential) => {

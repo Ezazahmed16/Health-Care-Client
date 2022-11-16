@@ -1,17 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { format } from 'date-fns';
 import AppoinmentOption from '../AppoinmentOption/AppoinmentOption';
 import BookingModal from '../BookingModal/BookingModal';
+import { useQuery } from '@tanstack/react-query';
+import Loading from '../../Shared/Loading/Loading';
 
 const AvailableAppoinment = ({ selectedDate }) => {
-    const [appoinmentOptions, setAppoinmentOptions] = useState([]);
+    // const [appoinmentOptions, setAppoinmentOptions] = useState([]);
     const [treatment, setTreatment] = useState({});
+    const date = format(selectedDate, 'PP');
 
-    useEffect(() => {
-        fetch('appointmentOptions.json')
-            .then(res => res.json())
-            .then(data => setAppoinmentOptions(data))
-    }, [])
+    const { data: appoinmentOptions = [], refetch, isLoading } = useQuery({
+        queryKey: ['appoinmentOptions', date],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/appoinmentOptions?date=${date}`)
+            const data = await res.json()
+            return data
+        }
+    })
+
+    if(isLoading){
+        return <Loading></Loading>
+    }
+
+    // useEffect(() => {
+    //     fetch('http://localhost:5000/appoinmentOptions')
+    //         .then(res => res.json())
+    //         .then(data => setAppoinmentOptions(data))
+    // }, [])
     return (
         <div className='my-10 max-w-screen-lg mx-auto'>
             <p className='text-center text-2xl mx-5'>Available Appoinment on {format(selectedDate, 'PP')}</p>
@@ -26,7 +42,12 @@ const AvailableAppoinment = ({ selectedDate }) => {
                 }
             </div>
             {
-                treatment && <BookingModal selectedDate={selectedDate} setTreatment={setTreatment} treatment={treatment}></BookingModal>
+                treatment && <BookingModal
+                    refetch={refetch}
+                    selectedDate={selectedDate}
+                    setTreatment={setTreatment}
+                    treatment={treatment}
+                ></BookingModal>
             }
         </div>
     );
